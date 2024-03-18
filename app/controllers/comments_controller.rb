@@ -68,4 +68,11 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:author_id, :photo_id, :body)
     end
+
+    def is_an_authorized_user
+      @photo = Photo.find(params.fetch(:comment).fetch(:photo_id))
+      if current_user != @photo.owner && @photo.owner.private? && !current_user.leaders.include?(@photo.owner)
+        redirect_back fallback_location: root_url, alert: "Not authorized"
+      end
+    end
 end
