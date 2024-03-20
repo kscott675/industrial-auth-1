@@ -7,7 +7,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    user_authorized?
   end
 
   def feed?
@@ -23,6 +23,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show_content?
+    user == current_user ||
+    !user.private? ||
+    user.followers.include?(current_user)
+  end
+
+  private
+
+  def user_authorized?
     user == current_user ||
     !user.private? ||
     user.followers.include?(current_user)
