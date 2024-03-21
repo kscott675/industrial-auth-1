@@ -40,6 +40,10 @@ class ApplicationPolicy
     false
   end
 
+  def profile_public?
+    user == current_user || !user.private? || user.followers.include?(current_user)
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

@@ -7,13 +7,11 @@ class PhotoPolicy < ApplicationPolicy
   end 
 
   def show?
-    owner? ||
-    !photo.owner.private? ||
-    photo.owner.followers.include?(user)
+    profile_public?
   end
 
   def create?
-    owner?
+    true
   end
 
   def update?
@@ -23,11 +21,4 @@ class PhotoPolicy < ApplicationPolicy
   def destroy?
     owner?
   end
-
-  private
-
-  def owner?
-    user == photo.owner
-  end
-
 end 

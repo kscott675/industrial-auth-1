@@ -1,4 +1,9 @@
 class CommentPolicy < ApplicationPolicy
+  
+  def create?
+    true
+  end
+  
   def update?
     author?
   end

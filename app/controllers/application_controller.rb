@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_profile_access
     unless policy(@user).profile_public?
-      flash.now[:alert] = "This user is private. Please request to follow."
+      flash.now[:alert] = "This user is private."
       respond_to do |format|
         format.html { render "show" }
         format.json { head :no_content }
