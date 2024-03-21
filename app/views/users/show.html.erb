@@ -1,7 +1,8 @@
-  <% if policy(@user).show? %>
+  <% unless !policy(@user).profile_public? %>
   <div class="row mb-4">
     <div class="col-md-6 offset-md-3">
       <%= render "users/user", user: @user %>
+      <%= @user.username %>
     </div>
   </div>
 
@@ -18,4 +19,6 @@
       </div>
     </div>
   <% end %>
+  <% else %>
+   <%= render "users/private_user", user: @user %>
 <% end %>
